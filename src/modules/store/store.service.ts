@@ -54,7 +54,7 @@ export class StoreService {
         page,
         limit,
         totalPages: Math.ceil(total / limit),
-        sortOrder,
+        sortOrder
       },
     };
   }

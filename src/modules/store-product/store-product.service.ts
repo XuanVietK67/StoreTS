@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
-import { CreateStoreProductDto } from './dto/create-store-product.dto';
-import { UpdateStoreProductDto } from './dto/update-store-product.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import { CreateStoreProductDto } from 'src/modules/store-product/dto/create-store-product.dto';
+import { UpdateStoreProductDto } from 'src/modules/store-product/dto/update-store-product.dto';
+import { StoreProduct } from 'src/modules/store-product/schemas/store-product.schema';
 
 @Injectable()
 export class StoreProductService {
-  create(createStoreProductDto: CreateStoreProductDto) {
-    return 'This action adds a new storeProduct';
+  constructor(
+    @InjectModel(StoreProduct.name)
+    private storeProductModel: Model<StoreProduct>,
+  ) {}
+
+  async create(createStoreProductDto: CreateStoreProductDto) {
+    const { storeId, productId } = createStoreProductDto;
+    try {
+      const res = await this.storeProductModel.create({
+        storeId: new Types.ObjectId(storeId),
+        productId: new Types.ObjectId(productId),
+      });
+      return res
+    } catch (err) {
+      throw new BadRequestException(err);
+    }
   }
 
   findAll() {
-    return `This action returns all storeProduct`;
+    return `This action returns all StoreProductProduct`;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} storeProduct`;
+    return `This action returns a #${id} StoreProductProduct`;
   }
 
-  update(id: number, updateStoreProductDto: UpdateStoreProductDto) {
-    return `This action updates a #${id} storeProduct`;
+  update(
+    id: number,
+    updateStoreProductProductDto: UpdateStoreProductDto,
+  ) {
+    return `This action updates a #${id} StoreProductProduct`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} storeProduct`;
+    return `This action removes a #${id} StoreProductProduct`;
   }
 }

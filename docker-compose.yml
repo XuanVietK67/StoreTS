@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mongo:
     image: mongo:7
-    container_name: mongo
+    container_name: mongo_store
     restart: always
     ports:
       - "27021:27017"
@@ -11,7 +11,7 @@ services:
       - mongo_data:/data/db
 
   nestjs:
-    image: ghcr.io/username/repo/nestjs-app:latest
+    image: ghcr.io/xuanvietk67/storets/nestjs-app:latest
     restart: always
     container_name: nestjs-app
     depends_on:

@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { StoreProductService } from './store-product.service';
-import { CreateStoreProductDto } from './dto/create-store-product.dto';
-import { UpdateStoreProductDto } from './dto/update-store-product.dto';
+import { CreateStoreProductDto } from 'src/modules/store-product/dto/create-store-product.dto';
+import { UpdateStoreProductDto } from 'src/modules/store-product/dto/update-store-product.dto';
+import { StoreProductService } from 'src/modules/store-product/store-product.service';
 
 @Controller('store-product')
 export class StoreProductController {
   constructor(private readonly storeProductService: StoreProductService) {}
 
-  @Post()
+  @Post('add_product')
   create(@Body() createStoreProductDto: CreateStoreProductDto) {
     return this.storeProductService.create(createStoreProductDto);
   }

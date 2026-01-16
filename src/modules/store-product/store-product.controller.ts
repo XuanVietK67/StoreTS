@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CreateStoreProductDto } from 'src/modules/store-product/dto/create-store-product.dto';
 import { UpdateStoreProductDto } from 'src/modules/store-product/dto/update-store-product.dto';
 import { StoreProductService } from 'src/modules/store-product/store-product.service';
+import { FindStoreQueryDto } from 'src/modules/store/dto/update-store.dto';
 
 @Controller('store-product')
 export class StoreProductController {
@@ -12,9 +13,9 @@ export class StoreProductController {
     return this.storeProductService.create(createStoreProductDto);
   }
 
-  @Get()
-  findAll() {
-    return this.storeProductService.findAll();
+  @Get(':storeId/products')
+  findAll(@Param('storeId') storeId: string, @Query() query: FindStoreQueryDto) {
+    return this.storeProductService.findAllProductsByStore(storeId, query);
   }
 
   @Get(':id')

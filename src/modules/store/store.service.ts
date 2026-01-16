@@ -1,7 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Store } from 'src/modules/store/schemas/store.schema';
-import { Model, SortOrder } from 'mongoose';
+import { isValidObjectId, Model, SortOrder } from 'mongoose';
 import { CreateStoreDto } from 'src/modules/store/dto/create-store.dto';
 import {
   FindStoreQueryDto,
@@ -54,13 +58,25 @@ export class StoreService {
         page,
         limit,
         totalPages: Math.ceil(total / limit),
-        sortOrder
+        sortOrder,
       },
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} store`;
+  async findOne(storeId: string) {
+    if (!isValidObjectId(storeId)) {
+      throw new BadRequestException('Invalid store id');
+    }
+
+    const store = await this.StoreModel.findById(storeId)
+      .select('_id name status createdAt')
+      .lean();
+
+    if (!store) {
+      throw new NotFoundException('Store not found');
+    }
+
+    return store;
   }
 
   update(id: number, updateStoreDto: UpdateStoreDto) {

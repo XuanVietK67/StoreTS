@@ -27,3 +27,5 @@ export class StoreProduct {
 export const StoreProductSchema = SchemaFactory.createForClass(StoreProduct);
 
 StoreProductSchema.index({ storeId: 1, productId: 1 }, { unique: true });
+StoreProductSchema.index({ storeId: 1 });
+StoreProductSchema.index({ productId: 1 });

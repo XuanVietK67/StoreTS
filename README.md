@@ -102,4 +102,14 @@ npm run dev
 
 ---
 
+## 🖥️ Giao diện demo
+
+### Danh sách sản phẩm & Filter theo topping
+
+**Trạng thái mặc định**
+![Store menu default](/docs/images/toppingFilterOff.png)
+
+**Sau khi chọn topping & sắp xếp**
+![Store menu filtered](/docs/images/toppingFilterOn.png)
+
 Cảm ơn anh/chị đã dành thời gian review bài test 🙏
